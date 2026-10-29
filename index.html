@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Figuras de Lissajous</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <aside class="panel">
+      <header>
+        <h1>Figuras de Lissajous</h1>
+        <p class="formula">x = A·sin(a·t + δ)<br>y = B·sin(b·t)</p>
+      </header>
+
+      <section>
+        <label class="row" for="a-num">
+          <span>Frecuencia <b>a</b> (x)</span>
+          <input id="a-num" type="number" min="0" step="0.01">
+        </label>
+        <input id="a-range" type="range" min="1" max="20" step="1" aria-label="Frecuencia a">
+        <div class="steps">
+          <button data-param="a" data-d="-1">&minus;1</button>
+          <button data-param="a" data-d="-0.1">&minus;0.1</button>
+          <button data-param="a" data-d="-0.01">&minus;0.01</button>
+          <button data-param="a" data-d="0.01">+0.01</button>
+          <button data-param="a" data-d="0.1">+0.1</button>
+          <button data-param="a" data-d="1">+1</button>
+        </div>
+      </section>
+
+      <section>
+        <label class="row" for="b-num">
+          <span>Frecuencia <b>b</b> (y)</span>
+          <input id="b-num" type="number" min="0" step="0.01">
+        </label>
+        <input id="b-range" type="range" min="1" max="20" step="1" aria-label="Frecuencia b">
+        <div class="steps">
+          <button data-param="b" data-d="-1">&minus;1</button>
+          <button data-param="b" data-d="-0.1">&minus;0.1</button>
+          <button data-param="b" data-d="-0.01">&minus;0.01</button>
+          <button data-param="b" data-d="0.01">+0.01</button>
+          <button data-param="b" data-d="0.1">+0.1</button>
+          <button data-param="b" data-d="1">+1</button>
+        </div>
+      </section>
+
+      <section>
+        <label class="row" for="d-num">
+          <span>Desfase <b>δ</b> (grados)</span>
+          <input id="d-num" type="number" step="1">
+        </label>
+        <input id="d-range" type="range" min="0" max="360" step="1" aria-label="Desfase delta">
+        <div class="steps">
+          <button data-delta="0">0°</button>
+          <button data-delta="45">45°</button>
+          <button data-delta="90">90°</button>
+          <button data-delta="135">135°</button>
+          <button data-delta="180">180°</button>
+          <button data-delta="270">270°</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Amplitudes</h2>
+        <label class="row">
+          <span>A (ancho)</span>
+          <input data-key="A" type="range" min="0.05" max="1" step="0.01">
+        </label>
+        <label class="row">
+          <span>B (alto)</span>
+          <input data-key="B" type="range" min="0.05" max="1" step="0.01">
+        </label>
+      </section>
+
+      <section>
+        <h2>Figuras</h2>
+        <div class="presets">
+          <button data-a="1" data-b="1" data-dg="90">1:1 · Círculo</button>
+          <button data-a="1" data-b="1" data-dg="45">1:1 · Elipse</button>
+          <button data-a="1" data-b="2" data-dg="90">1:2 · Ocho</button>
+          <button data-a="1" data-b="2" data-dg="0">1:2 · Parábola</button>
+          <button data-a="3" data-b="2" data-dg="90">3:2</button>
+          <button data-a="3" data-b="4" data-dg="90">3:4</button>
+          <button data-a="5" data-b="4" data-dg="90">5:4</button>
+          <button data-a="5" data-b="6" data-dg="90">5:6</button>
+          <button data-a="9" data-b="8" data-dg="90">9:8</button>
+          <button data-a="7" data-b="11" data-dg="45">7:11</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Animación</h2>
+        <div class="row">
+          <button id="play-phase" class="primary">&#9654; Girar δ</button>
+          <label class="inline">
+            <span>°/s</span>
+            <input data-key="phaseSpeed" type="range" min="1" max="180" step="1">
+          </label>
+        </div>
+        <div class="row">
+          <button id="play-trace" class="primary">&#9654; Trazar</button>
+          <label class="inline">
+            <span>Duración</span>
+            <input data-key="traceSeconds" type="range" min="2" max="30" step="1">
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Apariencia</h2>
+        <label class="row">
+          <span>Color</span>
+          <select data-key="colorMode">
+            <option value="gradiente">Degradado a lo largo de t</option>
+            <option value="solido">Color único</option>
+          </select>
+        </label>
+        <label class="row" id="row-color">
+          <span>Color de línea</span>
+          <input data-key="color" type="color">
+        </label>
+        <label class="row" id="row-hue">
+          <span>Tono inicial</span>
+          <input data-key="hue" type="range" min="0" max="360" step="1">
+        </label>
+        <label class="row">
+          <span>Grosor</span>
+          <input data-key="lineWidth" type="range" min="0.3" max="8" step="0.1">
+        </label>
+        <label class="row">
+          <span>Fondo</span>
+          <input data-key="bg" type="color">
+        </label>
+        <label class="check"><input data-key="glow" type="checkbox"> Brillo (osciloscopio)</label>
+        <label class="check"><input data-key="showGrid" type="checkbox"> Ejes y marco</label>
+      </section>
+
+      <section>
+        <h2>Guardar imagen</h2>
+        <label class="row">
+          <span>Tamaño</span>
+          <select id="export-size">
+            <option value="1080">1080 × 1080</option>
+            <option value="2048" selected>2048 × 2048</option>
+            <option value="4096">4096 × 4096</option>
+          </select>
+        </label>
+        <label class="check"><input id="export-label" type="checkbox" checked> Incluir valores de a, b y δ</label>
+        <label class="check"><input id="export-transparent" type="checkbox"> Fondo transparente</label>
+        <button id="save" class="primary wide">Guardar PNG</button>
+      </section>
+
+      <footer>
+        <button id="reset" class="link">Restablecer</button>
+        <p class="hint">Teclado: <kbd>Espacio</kbd> girar δ · <kbd>T</kbd> trazar · <kbd>&larr;</kbd><kbd>&rarr;</kbd> a ±1 · <kbd>&uarr;</kbd><kbd>&darr;</kbd> b ±1 (<kbd>Shift</kbd> ±0.01) · <kbd>S</kbd> guardar</p>
+      </footer>
+    </aside>
+
+    <div class="stage" id="stage">
+      <canvas id="lienzo"></canvas>
+      <div class="hud" id="hud"></div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
